@@ -1,0 +1,2432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zebaish Jewellers | Handcrafted Elegance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- ALL CSS INLINE -->
+    <style>
+        :root {
+            --color-cream: #FDF8F3;
+            --color-cream-dark: #F5EDE4;
+            --color-cream-darker: #EBE0D4;
+            --color-gold: #D4A574;
+            --color-gold-dark: #B8956A;
+            --color-gold-light: #E8C9A0;
+            --color-brown: #5D4037;
+            --color-brown-light: #8D6E63;
+            --color-text: #3E2723;
+            --color-text-light: #6D4C41;
+            --color-white: #FFFFFF;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+            --transition: all 0.3s ease;
+            --shadow-soft: 0 4px 20px rgba(93, 64, 55, 0.1);
+            --shadow-medium: 0 8px 30px rgba(93, 64, 55, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-cream);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+            color: var(--color-white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-brown);
+            border: 2px solid var(--color-gold);
+            padding: 10px 28px;
+            border-radius: 8px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-gold);
+            color: var(--color-white);
+        }
+
+        .btn-large {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Admin Toggle */
+        .admin-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--color-brown);
+            color: var(--color-white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-medium);
+            transition: var(--transition);
+        }
+
+        .admin-toggle:hover {
+            background: var(--color-text);
+            transform: translateY(-2px);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(253, 248, 243, 0.98);
+            z-index: 999;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--color-gold-light);
+        }
+
+        .admin-header h2 {
+            color: var(--color-brown);
+            font-family: var(--font-heading);
+            font-size: 2rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--color-text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--color-gold-dark);
+        }
+
+        .admin-form-section,
+        .admin-list-section {
+            background: var(--color-white);
+            border: 1px solid var(--color-cream-darker);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .admin-form-section h3,
+        .admin-list-section h3 {
+            color: var(--color-brown);
+            margin-bottom: 20px;
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: var(--color-brown);
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: var(--color-cream);
+            border: 1px solid var(--color-cream-darker);
+            color: var(--color-text);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-gold);
+            background: var(--color-white);
+        }
+
+        .image-preview {
+            max-height: 150px;
+            margin-top: 10px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid var(--color-gold-light);
+        }
+
+        .form-actions {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-cream-darker);
+            border-radius: 8px;
+            background: var(--color-cream);
+        }
+
+        .admin-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .admin-product-card {
+            background: var(--color-cream);
+            border: 1px solid var(--color-cream-darker);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .admin-product-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .admin-product-info {
+            flex: 1;
+        }
+
+        .admin-product-info h4 {
+            color: var(--color-text);
+            margin-bottom: 5px;
+            font-family: var(--font-heading);
+        }
+
+        .admin-product-info p {
+            color: var(--color-gold-dark);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .admin-product-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .admin-product-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .edit-btn {
+            color: var(--color-gold-dark);
+        }
+
+        .delete-btn {
+            color: #c44d4d;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(253, 248, 243, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-cream-darker);
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .nav-brand {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-brown);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-brown);
+        }
+
+        .cart-btn {
+            background: var(--color-gold);
+            color: var(--color-white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cart-btn:hover {
+            background: var(--color-gold-dark);
+            transform: scale(1.05);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-brown);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            background: var(--color-cream);
+            border-top: 1px solid var(--color-cream-darker);
+        }
+
+        .mobile-menu a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            padding: 12px 0;
+            font-weight: 500;
+        }
+
+        .mobile-menu:not(.hidden) {
+            display: flex;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding-top: 80px;
+            background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-cream-dark) 100%);
+        }
+
+        .hero-content {
+            padding: 60px;
+            max-width: 600px;
+        }
+
+        .hero-tagline {
+            display: inline-block;
+            color: var(--color-gold-dark);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background: var(--color-white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .hero-title {
+            margin-bottom: 25px;
+        }
+
+        .title-main {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            color: var(--color-brown);
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .title-sub {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--color-gold-dark);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--color-text-light);
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            object-fit: cover;
+        }
+
+        /* Features Bar */
+        .features-bar {
+            background: var(--color-brown);
+            color: var(--color-cream);
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .feature-icon {
+            color: var(--color-gold);
+            font-size: 1.2rem;
+        }
+
+        /* Collection Section */
+        .collection {
+            padding: 100px 0;
+            background: var(--color-white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            color: var(--color-brown);
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            color: var(--color-text-light);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .section-line {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-gold), var(--color-gold-dark));
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .search-filter-bar {
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+
+        .search-filter-bar input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid var(--color-cream-darker);
+            border-radius: 30px;
+            background: var(--color-cream);
+            font-size: 1rem;
+        }
+
+        .search-filter-bar input:focus {
+            outline: none;
+            border-color: var(--color-gold);
+            background: var(--color-white);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            color: var(--color-text-light);
+            border: 1px solid var(--color-cream-darker);
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--color-gold);
+            color: var(--color-white);
+            border-color: var(--color-gold);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background: var(--color-cream);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--color-cream-darker);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .product-image {
+            position: relative;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .badge-featured,
+        .badge-low {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-featured {
+            background: var(--color-gold);
+            color: var(--color-white);
+        }
+
+        .badge-low {
+            background: #e74c3c;
+            color: var(--color-white);
+        }
+
+        .quick-view-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--color-brown);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: var(--transition);
+        }
+
+        .product-card:hover .quick-view-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .add-cart-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: var(--color-gold);
+            color: var(--color-white);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-cart-btn:hover {
+            background: var(--color-gold-dark);
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--color-brown);
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            color: var(--color-gold-dark);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-desc {
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--color-cream-darker);
+        }
+
+        .category-tag {
+            background: var(--color-cream-darker);
+            color: var(--color-text-light);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            text-transform: capitalize;
+        }
+
+        .stock-status {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .stock-status.low {
+            color: #e74c3c;
+        }
+
+        /* Craft Section */
+        .craft {
+            padding: 100px 0;
+            background: var(--color-cream-dark);
+        }
+
+        .craft-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .craft-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .craft-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--color-brown);
+            margin-bottom: 10px;
+        }
+
+        .craft-subtitle {
+            font-size: 1.3rem;
+            color: var(--color-gold-dark);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .craft-text {
+            color: var(--color-text-light);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .craft-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .craft-features li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .craft-features span {
+            color: var(--color-gold);
+            font-size: 1.3rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background: var(--color-white);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .about-text {
+            color: var(--color-text-light);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--color-cream);
+            border-radius: 15px;
+            border: 1px solid var(--color-cream-darker);
+        }
+
+        .stat-number {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--color-gold-dark);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: var(--color-cream);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .testimonial-card {
+            background: var(--color-white);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .stars {
+            color: var(--color-gold);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .testimonial-card p {
+            color: var(--color-text-light);
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            color: var(--color-brown);
+            font-weight: 700;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: var(--color-white);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .info-item h4 {
+            font-family: var(--font-heading);
+            color: var(--color-brown);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .info-item p {
+            color: var(--color-text-light);
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            background: var(--color-cream);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--color-cream-darker);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .contact-form label {
+            display: block;
+            color: var(--color-brown);
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            background: var(--color-white);
+            border: 1px solid var(--color-cream-darker);
+            color: var(--color-text);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--color-gold);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--color-brown);
+            color: var(--color-cream);
+            padding: 70px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 50px;
+        }
+
+        .footer-brand h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--color-gold-light);
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            color: rgba(253, 248, 243, 0.8);
+            line-height: 1.7;
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            color: var(--color-gold-light);
+            margin-bottom: 20px;
+            font-family: var(--font-heading);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(253, 248, 243, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-gold);
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .social-link {
+            color: rgba(253, 248, 243, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            color: var(--color-gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+            color: rgba(253, 248, 243, 0.6);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            max-width: 100%;
+            height: 100vh;
+            background: var(--color-white);
+            border-left: 1px solid var(--color-cream-darker);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            border-bottom: 1px solid var(--color-cream-darker);
+        }
+
+        .cart-header h2 {
+            color: var(--color-brown);
+            font-family: var(--font-heading);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: var(--color-text-light);
+            padding: 40px 0;
+            font-style: italic;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            background: var(--color-cream);
+            border: 1px solid var(--color-cream-darker);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-info h4 {
+            color: var(--color-brown);
+            margin-bottom: 5px;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+        }
+
+        .cart-item-info p {
+            color: var(--color-gold-dark);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            background: var(--color-white);
+            border: 1px solid var(--color-cream-darker);
+            color: var(--color-brown);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .qty-btn:hover {
+            background: var(--color-gold);
+            color: var(--color-white);
+            border-color: var(--color-gold);
+        }
+
+        .remove-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: #c44d4d;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .cart-footer {
+            padding: 25px;
+            border-top: 1px solid var(--color-cream-darker);
+            background: var(--color-cream);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--color-brown);
+        }
+
+        .cart-total span:last-child {
+            color: var(--color-gold-dark);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(62, 39, 35, 0.8);
+            z-index: 300;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--color-white);
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-content .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            background: var(--color-cream);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #modal-body {
+            padding: 40px;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .modal-image-container {
+            position: relative;
+        }
+
+        .modal-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .modal-category {
+            color: var(--color-gold-dark);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-info h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--color-brown);
+            margin: 10px 0 15px;
+        }
+
+        .modal-price {
+            font-size: 1.8rem;
+            color: var(--color-gold-dark);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .modal-desc {
+            color: var(--color-text-light);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .modal-stock {
+            margin-bottom: 20px;
+        }
+
+        .in-stock {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .low-stock {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .modal-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .modal-features li {
+            color: var(--color-text);
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .modal-features li::before {
+            content: '✦';
+            color: var(--color-gold);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--color-brown);
+            color: var(--color-white);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 400;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-content {
+                padding: 40px;
+                order: 2;
+            }
+            
+            .hero-image {
+                order: 1;
+                padding: 20px;
+            }
+            
+            .hero-image img {
+                max-height: 400px;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .craft-grid,
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .craft-image,
+            .about-image {
+                order: -1;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .title-main {
+                font-size: 2.5rem;
+            }
+            
+            .title-sub {
+                font-size: 1.5rem;
+            }
+            
+            .features-bar {
+                gap: 20px;
+                padding: 15px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .form-grid,
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .social-links {
+                align-items: center;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+            }
+            
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content {
+                padding: 20px;
+            }
+            
+            .title-main {
+                font-size: 2rem;
+            }
+            
+            .filter-buttons {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Toggle -->
+    <button onclick="toggleAdmin()" class="admin-toggle">
+        <span>⚙️</span> Admin
+    </button>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">Zebaish Jewellers</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#collection">Collection</a>
+                <a href="#craft">Our Craft</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <button onclick="toggleCart()" class="cart-btn">
+                    Cart (<span id="cart-count">0</span>)
+                </button>
+            </div>
+            <button onclick="toggleMobileMenu()" class="mobile-menu-btn">☰</button>
+        </div>
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <a href="#home">Home</a>
+            <a href="#collection">Collection</a>
+            <a href="#craft">Our Craft</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-panel">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h2>Admin Panel - Manage Products</h2>
+                <button onclick="toggleAdmin()" class="close-btn">&times;</button>
+            </div>
+
+            <div class="admin-form-section">
+                <h3>Add New Product</h3>
+                <form id="product-form" onsubmit="handleProductSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" id="prod-name" required placeholder="e.g., Royal Bridal Necklace">
+                        </div>
+                        <div class="form-group">
+                            <label>Price (Rs.)</label>
+                            <input type="number" id="prod-price" required placeholder="3500">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="prod-category">
+                                <option value="necklace">Necklace</option>
+                                <option value="earrings">Earrings</option>
+                                <option value="maangtikka">Maang Tikka</option>
+                                <option value="set">Bridal Set</option>
+                                <option value="bangles">Bangles</option>
+                                <option value="ring">Ring</option>
+                                <option value="bracelet">Bracelet</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Quantity</label>
+                            <input type="number" id="prod-stock" value="10" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Product Image</label>
+                            <input type="file" id="prod-image" accept="image/*" onchange="previewImage(this)">
+                            <img id="image-preview" class="image-preview hidden">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Description</label>
+                            <textarea id="prod-desc" rows="3" required placeholder="Describe your product..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>
+                                <input type="checkbox" id="prod-featured"> Featured Product
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Save Product</button>
+                        <button type="button" onclick="clearForm()" class="btn-secondary">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="admin-list-section">
+                <h3>Your Products (<span id="product-count">0</span>)</h3>
+                <div class="search-box">
+                    <input type="text" id="admin-search" placeholder="Search products..." onkeyup="searchAdminProducts()">
+                </div>
+                <div id="admin-products-list" class="admin-products-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-tagline">Handcrafted with Love</span>
+            <h1 class="hero-title">
+                <span class="title-main">Zebaish Jewellers</span>
+                <span class="title-sub">Timeless Elegance</span>
+            </h1>
+            <p class="hero-description">
+                Discover exquisite handmade jewelry that blends traditional artistry 
+                with contemporary design. Each piece is crafted to make your 
+                special moments unforgettable.
+            </p>
+            <div class="hero-buttons">
+                <button onclick="scrollToSection('collection')" class="btn-primary btn-large">Explore Collection</button>
+                <button onclick="scrollToSection('craft')" class="btn-secondary btn-large">Our Story</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&auto=format&fit=crop&q=80" alt="Zebaish Jewelry">
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <div class="features-bar">
+        <div class="feature-item">
+            <span class="feature-icon">✦</span>
+            <span>Free Shipping Above Rs. 2000</span>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">✦</span>
+            <span>Handmade with Love</span>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">✦</span>
+            <span>Premium Quality</span>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">✦</span>
+            <span>Custom Orders Available</span>
+        </div>
+    </div>
+
+    <!-- Collection Section -->
+    <section id="collection" class="collection">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Exclusive Collection</h2>
+                <p class="section-subtitle">Handcrafted Pieces for Every Occasion</p>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="search-filter-bar">
+                <input type="text" id="product-search" placeholder="Search products..." onkeyup="searchProducts()">
+            </div>
+
+            <div class="filter-buttons">
+                <button onclick="filterProducts('all')" class="filter-btn active" data-filter="all">All</button>
+                <button onclick="filterProducts('necklace')" class="filter-btn" data-filter="necklace">Necklaces</button>
+                <button onclick="filterProducts('earrings')" class="filter-btn" data-filter="earrings">Earrings</button>
+                <button onclick="filterProducts('maangtikka')" class="filter-btn" data-filter="maangtikka">Maang Tikka</button>
+                <button onclick="filterProducts('set')" class="filter-btn" data-filter="set">Bridal Sets</button>
+                <button onclick="filterProducts('bangles')" class="filter-btn" data-filter="bangles">Bangles</button>
+                <button onclick="filterProducts('ring')" class="filter-btn" data-filter="ring">Rings</button>
+            </div>
+
+            <div id="products-grid" class="products-grid"></div>
+        </div>
+    </section>
+
+    <!-- Craft Section -->
+    <section id="craft" class="craft">
+        <div class="container">
+            <div class="craft-grid">
+                <div class="craft-image">
+                    <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800&auto=format&fit=crop&q=80" alt="Hand Embroidery">
+                </div>
+                <div class="craft-content">
+                    <h2 class="craft-title">The Art of Detail</h2>
+                    <h3 class="craft-subtitle">Traditional Hand Embroidery</h3>
+                    <p class="craft-text">
+                        Our jewelry features centuries-old embroidery techniques using 
+                        fine metallic threads on luxurious velvet bases. Each piece is 
+                        meticulously crafted by skilled artisans, creating stunning 
+                        patterns that blend heritage with modern elegance.
+                    </p>
+                    <ul class="craft-features">
+                        <li><span>✦</span> 100% Handmade by Master Artisans</li>
+                        <li><span>✦</span> Premium Metallic Threads</li>
+                        <li><span>✦</span> Traditional Techniques Preserved</li>
+                        <li><span>✦</span> Lightweight & Comfortable Design</li>
+                    </ul>
+                    <button class="btn-secondary">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title">About Zebaish</h2>
+                    <p class="about-text">
+                        Founded with a passion for preserving traditional craftsmanship, 
+                        Zebaish Jewellers brings you exquisite handmade jewelry that blends 
+                        heritage with contemporary elegance. Every piece tells a story 
+                        of dedication, artistry, and timeless beauty.
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">25+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10k+</div>
+                            <div class="stat-label">Happy Customers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Unique Designs</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop&q=80" alt="About Zebaish">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Absolutely stunning pieces! The craftsmanship is impeccable. Wore the bridal set for my wedding and received countless compliments."</p>
+                    <div class="testimonial-author">- Priya Sharma</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Lightweight yet looks so royal. Perfect for festive occasions. The packaging was also beautiful and made it feel so special!"</p>
+                    <div class="testimonial-author">- Aisha Khan</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Authentic handcrafted work. You can see the dedication in every detail. Highly recommended for anyone who loves traditional jewelry!"</p>
+                    <div class="testimonial-author">- Meera Patel</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Custom orders and inquiries welcome</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <h4>Visit Us</h4>
+                        <p>123 Jewellery Market<br>Jaipur, Rajasthan 302001</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Call Us</h4>
+                        <p>+91 98765 43210<br>Mon-Sat, 10am-8pm</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Email Us</h4>
+                        <p>info@zebaishjewellers.com<br>orders@zebaishjewellers.com</p>
+                    </div>
+                </div>
+                <form onsubmit="handleSubmit(event)" class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Your Email</label>
+                            <input type="email" required placeholder="john@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" required placeholder="Custom Order Inquiry">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea rows="4" required placeholder="Tell us what you need..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Zebaish Jewellers</h3>
+                    <p>Preserving the art of traditional hand embroidery through exquisite handmade jewelry since 1999.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#collection">Collection</a></li>
+                        <li><a href="#craft">Our Craft</a></li>
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#collection">Necklaces</a></li>
+                        <li><a href="#collection">Earrings</a></li>
+                        <li><a href="#collection">Bridal Sets</a></li>
+                        <li><a href="#collection">Bangles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Instagram</a>
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Zebaish Jewellers. All rights reserved. Handmade with love.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Shopping Cart</h2>
+            <button onclick="toggleCart()" class="close-btn">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total Amount:</span>
+                <span id="cart-total">Rs. 0</span>
+            </div>
+            <button onclick="checkout()" class="btn-primary btn-full">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button onclick="closeModal()" class="close-btn">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">Added to cart!</div>
+
+    <!-- JavaScript -->
+    <script>
+        // ZEBAISH JEWELLERS - COMPLETE JAVASCRIPT
+
+        let products = [];
+        let categories = [
+            {id: "necklace", name: "Necklaces", icon: "📿"},
+            {id: "earrings", name: "Earrings", icon: "💎"},
+            {id: "maangtikka", name: "Maang Tikka", icon: "👑"},
+            {id: "set", name: "Bridal Sets", icon: "💍"},
+            {id: "bangles", name: "Bangles", icon: "⭕"},
+            {id: "ring", name: "Rings", icon: "💍"},
+            {id: "bracelet", name: "Bracelets", icon: "📿"}
+        ];
+        let cart = [];
+        let currentFilter = 'all';
+        let editingId = null;
+        let allProducts = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            restoreCart();
+        });
+
+        // Load data from JSON file
+        async function loadData() {
+            try {
+                const response = await fetch('products.json');
+                const data = await response.json();
+                
+                products = data.products || [];
+                allProducts = [...products];
+                
+                localStorage.setItem('zebaishProducts', JSON.stringify(products));
+                
+                renderProducts();
+                renderCategories();
+                
+                console.log('✅ Data loaded from JSON');
+                
+            } catch (error) {
+                console.log('⚠️ JSON load failed, using default data');
+                products = getDefaultProducts();
+                allProducts = [...products];
+                renderProducts();
+            }
+        }
+
+        // Default products
+        function getDefaultProducts() {
+            return [
+                {
+                    id: 1,
+                    name: "Royal Bridal Necklace Set",
+                    price: 4500,
+                    category: "set",
+                    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80",
+                    description: "Complete bridal set featuring intricate hand embroidery on rich velvet.",
+                    featured: true,
+                    stock: 5
+                },
+                {
+                    id: 2,
+                    name: "Classic Red Velvet Bangles",
+                    price: 1200,
+                    category: "bangles",
+                    image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=600&auto=format&fit=crop&q=80",
+                    description: "Set of 12 handcrafted bangles with metallic thread embroidery.",
+                    featured: false,
+                    stock: 10
+                },
+                {
+                    id: 3,
+                    name: "Green Velvet Maang Tikka",
+                    price: 800,
+                    category: "maangtikka",
+                    image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=600&auto=format&fit=crop&q=80",
+                    description: "Elegant maang tikka with pearl drops and detailed embroidery.",
+                    featured: true,
+                    stock: 8
+                },
+                {
+                    id: 4,
+                    name: "Gold Thread Choker Necklace",
+                    price: 2800,
+                    category: "necklace",
+                    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&auto=format&fit=crop&q=80",
+                    description: "Statement choker featuring floral patterns with mirror work.",
+                    featured: false,
+                    stock: 3
+                },
+                {
+                    id: 5,
+                    name: "Bridal Earrings - Jhumka Style",
+                    price: 1500,
+                    category: "earrings",
+                    image: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?w=600&auto=format&fit=crop&q=80",
+                    description: "Traditional bell-shaped earrings with metallic thread work.",
+                    featured: true,
+                    stock: 12
+                }
+            ];
+        }
+
+        // Render categories
+        function renderCategories() {
+            const container = document.querySelector('.filter-buttons');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <button onclick="filterProducts('all')" class="filter-btn active" data-filter="all">All</button>
+                ${categories.map(cat => `
+                    <button onclick="filterProducts('${cat.id}')" class="filter-btn" data-filter="${cat.id}">
+                        ${cat.name}
+                    </button>
+                `).join('')}
+            `;
+        }
+
+        // Render products
+        function renderProducts(productsToRender = null) {
+            const grid = document.getElementById('products-grid');
+            if (!grid) return;
+            
+            const displayProducts = productsToRender || 
+                (currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter));
+            
+            if (displayProducts.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #8D6E63;">
+                        <h3>No products found</h3>
+                        <p>Check back soon for new arrivals!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = displayProducts.map(product => `
+                <div class="product-card" data-id="${product.id}">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" loading="lazy">
+                        ${product.featured ? '<span class="badge-featured">Featured</span>' : ''}
+                        ${product.stock < 5 ? `<span class="badge-low">Only ${product.stock} left</span>` : ''}
+                        <button onclick="showProductDetails(${product.id})" class="quick-view-btn">Quick View</button>
+                        <button onclick="addToCart(${product.id})" class="add-cart-btn">+</button>
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p class="product-price">Rs. ${product.price.toLocaleString()}</p>
+                        <p class="product-desc">${product.description}</p>
+                        <div class="product-meta">
+                            <span class="category-tag">${getCategoryName(product.category)}</span>
+                            <span class="stock-status ${product.stock < 3 ? 'low' : ''}">
+                                ${product.stock > 0 ? '✓ In Stock' : '✗ Out of Stock'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Get category name
+        function getCategoryName(catId) {
+            const cat = categories.find(c => c.id === catId);
+            return cat ? cat.name : catId;
+        }
+
+        // Search products
+        function searchProducts() {
+            const searchTerm = document.getElementById('product-search').value.toLowerCase();
+            
+            if (!searchTerm) {
+                renderProducts();
+                return;
+            }
+            
+            const filtered = allProducts.filter(p => 
+                p.name.toLowerCase().includes(searchTerm) ||
+                p.description.toLowerCase().includes(searchTerm) ||
+                p.category.toLowerCase().includes(searchTerm)
+            );
+            
+            renderProducts(filtered);
+        }
+
+        // Filter products
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            const searchInput = document.getElementById('product-search');
+            if (searchInput) searchInput.value = '';
+            
+            renderProducts();
+        }
+
+        // Cart functions
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product || product.stock === 0) {
+                showToast('Sorry, this item is out of stock!');
+                return;
+            }
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                if (existingItem.quantity >= product.stock) {
+                    showToast('Maximum stock limit reached!');
+                    return;
+                }
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartUI();
+            showToast('Added to cart!');
+            
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            const product = products.find(p => p.id === productId);
+            
+            if (!item || !product) return;
+            
+            const newQty = item.quantity + change;
+            
+            if (newQty <= 0) {
+                removeFromCart(productId);
+            } else if (newQty > product.stock) {
+                showToast('Maximum stock available: ' + product.stock);
+            } else {
+                item.quantity = newQty;
+                updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (!cartCount || !cartItems || !cartTotal) return;
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = `Rs. ${total.toLocaleString()}`;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>Rs. ${item.price.toLocaleString()}</p>
+                            <div class="cart-item-actions">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="qty-btn">-</button>
+                                <span style="color: #5D4037; min-width: 20px; text-align: center; font-weight: 600;">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="qty-btn">+</button>
+                                <button onclick="removeFromCart(${item.id})" class="remove-btn">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            localStorage.setItem('zebaishCart', JSON.stringify(cart));
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function showProductDetails(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const modal = document.getElementById('product-modal');
+            const body = document.getElementById('modal-body');
+            
+            body.innerHTML = `
+                <div class="modal-grid">
+                    <div class="modal-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="modal-image">
+                        ${product.featured ? '<span class="badge-featured" style="position: absolute; top: 20px; left: 20px;">Featured</span>' : ''}
+                    </div>
+                    <div class="modal-info">
+                        <span class="modal-category">${getCategoryName(product.category)}</span>
+                        <h2>${product.name}</h2>
+                        <p class="modal-price">Rs. ${product.price.toLocaleString()}</p>
+                        <p class="modal-desc">${product.description}</p>
+                        
+                        <div class="modal-stock">
+                            <span class="${product.stock < 5 ? 'low-stock' : 'in-stock'}">
+                                ${product.stock > 0 ? `✓ ${product.stock} items in stock` : '✗ Out of stock'}
+                            </span>
+                        </div>
+                        
+                        <ul class="modal-features">
+                            <li>Handmade with authentic craftsmanship</li>
+                            <li>Lightweight and comfortable</li>
+                            <li>Perfect for weddings and festivals</li>
+                            <li>Comes in premium packaging</li>
+                        </ul>
+                        
+                        <button onclick="addToCart(${product.id}); closeModal();" 
+                            class="btn-primary btn-full" 
+                            ${product.stock === 0 ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+                            ${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('product-modal').classList.remove('active');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) element.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            showToast('Thank you! We will contact you soon.');
+            e.target.reset();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!');
+                return;
+            }
+            
+            const total = document.getElementById('cart-total').textContent;
+            
+            const orderDetails = cart.map(item => 
+                `${item.name} x${item.quantity} = Rs. ${(item.price * item.quantity).toLocaleString()}`
+            ).join('\n');
+            
+            alert(`ORDER SUMMARY\n\n${orderDetails}\n\nTotal: ${total}\n\nThank you for shopping with Zebaish Jewellers!\n\nNote: This is a demo checkout.`);
+            
+            cart = [];
+            updateCartUI();
+            toggleCart();
+            localStorage.removeItem('zebaishCart');
+        }
+
+        function restoreCart() {
+            const saved = localStorage.getItem('zebaishCart');
+            if (saved) {
+                cart = JSON.parse(saved);
+                updateCartUI();
+            }
+        }
+
+        // Admin Panel Functions
+        function toggleAdmin() {
+            const panel = document.getElementById('admin-panel');
+            panel.classList.toggle('active');
+            if (panel.classList.contains('active')) {
+                renderAdminList();
+            }
+        }
+
+        function previewImage(input) {
+            const preview = document.getElementById('image-preview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('prod-name').value;
+            const price = parseInt(document.getElementById('prod-price').value);
+            const category = document.getElementById('prod-category').value;
+            const stock = parseInt(document.getElementById('prod-stock').value) || 10;
+            const description = document.getElementById('prod-desc').value;
+            const featured = document.getElementById('prod-featured').checked;
+            const imageInput = document.getElementById('prod-image');
+            
+            let image = "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=600&auto=format&fit=crop&q=80";
+            
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    image = evt.target.result;
+                    saveProduct(name, price, category, stock, description, featured, image);
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else if (editingId) {
+                const existing = products.find(p => p.id === editingId);
+                if (existing) image = existing.image;
+                saveProduct(name, price, category, stock, description, featured, image);
+            } else {
+                saveProduct(name, price, category, stock, description, featured, image);
+            }
+        }
+
+        function saveProduct(name, price, category, stock, description, featured, image) {
+            if (editingId) {
+                const index = products.findIndex(p => p.id === editingId);
+                if (index !== -1) {
+                    products[index] = { 
+                        ...products[index], 
+                        name, price, category, stock, description, featured, image 
+                    };
+                }
+                editingId = null;
+            } else {
+                const newProduct = {
+                    id: Date.now(),
+                    name,
+                    price,
+                    category,
+                    stock,
+                    description,
+                    featured,
+                    image
+                };
+                products.push(newProduct);
+            }
+            
+            allProducts = [...products];
+            localStorage.setItem('zebaishProducts', JSON.stringify(products));
+            clearForm();
+            renderProducts();
+            renderAdminList();
+            showToast('Product saved successfully!');
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                document.getElementById('prod-name').value = product.name;
+                document.getElementById('prod-price').value = product.price;
+                document.getElementById('prod-category').value = product.category;
+                document.getElementById('prod-stock').value = product.stock;
+                document.getElementById('prod-desc').value = product.description;
+                document.getElementById('prod-featured').checked = product.featured || false;
+                
+                const preview = document.getElementById('image-preview');
+                preview.src = product.image;
+                preview.classList.remove('hidden');
+                
+                editingId = id;
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                products = products.filter(p => p.id !== id);
+                allProducts = [...products];
+                localStorage.setItem('zebaishProducts', JSON.stringify(products));
+                renderProducts();
+                renderAdminList();
+                showToast('Product deleted!');
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('product-form').reset();
+            document.getElementById('image-preview').classList.add('hidden');
+            editingId = null;
+        }
+
+        function renderAdminList() {
+            const list = document.getElementById('admin-products-list');
+            const count = document.getElementById('product-count');
+            
+            if (!list || !count) return;
+            
+            count.textContent = products.length;
+            
+            const searchTerm = document.getElementById('admin-search')?.value.toLowerCase() || '';
+            let displayProducts = products;
+            
+            if (searchTerm) {
+                displayProducts = products.filter(p => 
+                    p.name.toLowerCase().includes(searchTerm) ||
+                    p.category.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (displayProducts.length === 0) {
+                list.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #6D4C41; padding: 40px;">No products found</p>';
+                return;
+            }
+            
+            list.innerHTML = displayProducts.map(p => `
+                <div class="admin-product-card">
+                    <img src="${p.image}" alt="${p.name}">
+                    <div class="admin-product-info">
+                        <h4>${p.name}</h4>
+                        <p>Rs. ${p.price.toLocaleString()}</p>
+                        <span style="color: #8D6E63; font-size: 0.85rem; text-transform: capitalize;">
+                            ${p.category} | Stock: ${p.stock}
+                        </span>
+                        ${p.featured ? '<span style="color: #D4A574; font-size: 0.8rem; display: block; margin-top: 5px;">⭐ Featured</span>' : ''}
+                        <div class="admin-product-actions">
+                            <button onclick="editProduct(${p.id})" class="edit-btn">Edit</button>
+                            <button onclick="deleteProduct(${p.id})" class="delete-btn">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function searchAdminProducts() {
+            renderAdminList();
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('product-modal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) closeModal();
+                });
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.getElementById('cart-sidebar').classList.remove('open');
+                document.getElementById('admin-panel').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
