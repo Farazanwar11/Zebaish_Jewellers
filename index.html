@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zebaish Jewellers | Handcrafted Elegance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Admin Toggle -->
+    <button onclick="toggleAdmin()" class="admin-toggle">
+        <span>⚙️</span> Admin
+    </button>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">Zebaish Jewellers</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#collection">Collection</a>
+                <a href="#craft">Our Craft</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <button onclick="toggleCart()" class="cart-btn">
+                    Cart (<span id="cart-count">0</span>)
+                </button>
+            </div>
+            <button onclick="toggleMobileMenu()" class="mobile-menu-btn">☰</button>
+        </div>
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <a href="#home">Home</a>
+            <a href="#collection">Collection</a>
+            <a href="#craft">Our Craft</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-panel">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h2>Admin Panel - Manage Products</h2>
+                <button onclick="toggleAdmin()" class="close-btn">&times;</button>
+            </div>
+
+            <div class="admin-form-section">
+                <h3>Add New Product</h3>
+                <form id="product-form" onsubmit="handleProductSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" id="prod-name" required placeholder="e.g., Royal Bridal Necklace">
+                        </div>
+                        <div class="form-group">
+                            <label>Price (Rs.)</label>
+                            <input type="number" id="prod-price" required placeholder="3500">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="prod-category">
+                                <option value="necklace">Necklace</option>
+                                <option value="earrings">Earrings</option>
+                                <option value="maangtikka">Maang Tikka</option>
+                                <option value="set">Bridal Set</option>
+                                <option value="bangles">Bangles</option>
+                                <option value="ring">Ring</option>
+                                <option value="bracelet">Bracelet</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Quantity</label>
+                            <input type="number" id="prod-stock" value="10" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Product Image</label>
+                            <input type="file" id="prod-image" accept="image/*" onchange="previewImage(this)">
+                            <img id="image-preview" class="image-preview hidden">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Description</label>
+                            <textarea id="prod-desc" rows="3" required placeholder="Describe your product..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>
+                                <input type="checkbox" id="prod-featured"> Featured Product
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Save Product</button>
+                        <button type="button" onclick="clearForm()" class="btn-secondary">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="admin-list-section">
+                <h3>Your Products (<span id="product-count">0</span>)</h3>
+                <div class="search-box">
+                    <input type="text" id="admin-search" placeholder="Search products..." onkeyup="searchAdminProducts()">
+                </div>
+                <div id="admin-products-list" class="admin-products-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-tagline">Handcrafted with Love</span>
+            <h1 class="hero-title">
+                <span class="title-main">Zebaish Jewellers</span>
+                <span class="title-sub">Timeless Elegance</span>
+            </h1>
+            <p class="hero-description">
+                Discover exquisite handmade jewelry that blends traditional artistry 
+                with contemporary design. Each piece is crafted to make your 
+                special moments unforgettable.
+            </p>
+            <div class="hero-buttons">
+                <button onclick="scrollToSection('collection')" class="btn-primary btn-large">Explore Collection</button>
+                <button onclick="scrollToSection('craft')" class="btn-secondary btn-large">Our Story</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&auto=format&fit=crop&q=80" alt="Zebaish Jewelry">
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <div class="features-bar">
+        <div class="feature-item">
+            <span class="feature-icon">✦</span>
+            <span>Free Shipping Above Rs. 2000</span>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">✦</span>
+            <span>Handmade with Love</span>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">✦</span>
+            <span>Premium Quality</span>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">✦</span>
+            <span>Custom Orders Available</span>
+        </div>
+    </div>
+
+    <!-- Collection Section -->
+    <section id="collection" class="collection">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Exclusive Collection</h2>
+                <p class="section-subtitle">Handcrafted Pieces for Every Occasion</p>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="search-filter-bar">
+                <input type="text" id="product-search" placeholder="Search products..." onkeyup="searchProducts()">
+            </div>
+
+            <div class="filter-buttons">
+                <button onclick="filterProducts('all')" class="filter-btn active" data-filter="all">All</button>
+                <button onclick="filterProducts('necklace')" class="filter-btn" data-filter="necklace">Necklaces</button>
+                <button onclick="filterProducts('earrings')" class="filter-btn" data-filter="earrings">Earrings</button>
+                <button onclick="filterProducts('maangtikka')" class="filter-btn" data-filter="maangtikka">Maang Tikka</button>
+                <button onclick="filterProducts('set')" class="filter-btn" data-filter="set">Bridal Sets</button>
+                <button onclick="filterProducts('bangles')" class="filter-btn" data-filter="bangles">Bangles</button>
+                <button onclick="filterProducts('ring')" class="filter-btn" data-filter="ring">Rings</button>
+            </div>
+
+            <div id="products-grid" class="products-grid"></div>
+        </div>
+    </section>
+
+    <!-- Craft Section -->
+    <section id="craft" class="craft">
+        <div class="container">
+            <div class="craft-grid">
+                <div class="craft-image">
+                    <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800&auto=format&fit=crop&q=80" alt="Hand Embroidery">
+                </div>
+                <div class="craft-content">
+                    <h2 class="craft-title">The Art of Detail</h2>
+                    <h3 class="craft-subtitle">Traditional Hand Embroidery</h3>
+                    <p class="craft-text">
+                        Our jewelry features centuries-old embroidery techniques using 
+                        fine metallic threads on luxurious velvet bases. Each piece is 
+                        meticulously crafted by skilled artisans, creating stunning 
+                        patterns that blend heritage with modern elegance.
+                    </p>
+                    <ul class="craft-features">
+                        <li><span>✦</span> 100% Handmade by Master Artisans</li>
+                        <li><span>✦</span> Premium Metallic Threads</li>
+                        <li><span>✦</span> Traditional Techniques Preserved</li>
+                        <li><span>✦</span> Lightweight & Comfortable Design</li>
+                    </ul>
+                    <button class="btn-secondary">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title">About Zebaish</h2>
+                    <p class="about-text">
+                        Founded with a passion for preserving traditional craftsmanship, 
+                        Zebaish Jewellers brings you exquisite handmade jewelry that blends 
+                        heritage with contemporary elegance. Every piece tells a story 
+                        of dedication, artistry, and timeless beauty.
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">25+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10k+</div>
+                            <div class="stat-label">Happy Customers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Unique Designs</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop&q=80" alt="About Zebaish">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Absolutely stunning pieces! The craftsmanship is impeccable. Wore the bridal set for my wedding and received countless compliments."</p>
+                    <div class="testimonial-author">- Priya Sharma</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Lightweight yet looks so royal. Perfect for festive occasions. The packaging was also beautiful and made it feel so special!"</p>
+                    <div class="testimonial-author">- Aisha Khan</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Authentic handcrafted work. You can see the dedication in every detail. Highly recommended for anyone who loves traditional jewelry!"</p>
+                    <div class="testimonial-author">- Meera Patel</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Custom orders and inquiries welcome</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <h4>Visit Us</h4>
+                        <p>123 Jewellery Market<br>Jaipur, Rajasthan 302001</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Call Us</h4>
+                        <p>+91 98765 43210<br>Mon-Sat, 10am-8pm</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Email Us</h4>
+                        <p>info@zebaishjewellers.com<br>orders@zebaishjewellers.com</p>
+                    </div>
+                </div>
+                <form onsubmit="handleSubmit(event)" class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Your Email</label>
+                            <input type="email" required placeholder="john@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" required placeholder="Custom Order Inquiry">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea rows="4" required placeholder="Tell us what you need..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Zebaish Jewellers</h3>
+                    <p>Preserving the art of traditional hand embroidery through exquisite handmade jewelry since 1999.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#collection">Collection</a></li>
+                        <li><a href="#craft">Our Craft</a></li>
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#collection">Necklaces</a></li>
+                        <li><a href="#collection">Earrings</a></li>
+                        <li><a href="#collection">Bridal Sets</a></li>
+                        <li><a href="#collection">Bangles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Instagram</a>
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Zebaish Jewellers. All rights reserved. Handmade with love.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Shopping Cart</h2>
+            <button onclick="toggleCart()" class="close-btn">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total Amount:</span>
+                <span id="cart-total">Rs. 0</span>
+            </div>
+            <button onclick="checkout()" class="btn-primary btn-full">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button onclick="closeModal()" class="close-btn">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">Added to cart!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
